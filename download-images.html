@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Download Restaurant Images</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+        }
+
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 1.1em;
+        }
+
+        .instructions {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            border-left: 4px solid #667eea;
+        }
+
+        .instructions h2 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+
+        .instructions ol {
+            margin-left: 20px;
+        }
+
+        .instructions li {
+            margin-bottom: 10px;
+            line-height: 1.6;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+        }
+
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .progress {
+            margin-bottom: 30px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 30px;
+            background: #e9ecef;
+            border-radius: 15px;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            width: 0%;
+            transition: width 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+        }
+
+        .progress-text {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .image-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .image-item {
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .image-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .image-item img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .image-item .label {
+            padding: 10px;
+            background: #f8f9fa;
+            font-size: 14px;
+            color: #333;
+            text-align: center;
+        }
+
+        .status {
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+
+        .status.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .status.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .status.info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+
+        .log {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 10px;
+            max-height: 300px;
+            overflow-y: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            margin-top: 20px;
+        }
+
+        .log-entry {
+            padding: 5px 0;
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        .log-entry:last-child {
+            border-bottom: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>🍽️ Restaurant Image Downloader</h1>
+        <p class="subtitle">Automatically download all 39 high-quality restaurant images</p>
+
+        <div class="instructions">
+            <h2>📋 Instructions</h2>
+            <ol>
+                <li><strong>Click "Download All Images"</strong> - This will fetch all 39 images from Unsplash (free,
+                    high-quality stock photos)</li>
+                <li><strong>Wait for completion</strong> - Each image will download automatically (takes about 2-3
+                    minutes)</li>
+                <li><strong>Save to images folder</strong> - Right-click each image and save to your
+                    <code>images/</code> folder with the correct filename</li>
+                <li><strong>Alternative:</strong> Use "Generate Download Links" to get direct Unsplash URLs you can
+                    download manually</li>
+            </ol>
+        </div>
+
+        <div class="button-group">
+            <button onclick="downloadAllImages()" id="downloadBtn">📥 Download All Images</button>
+            <button onclick="generateLinks()" id="linksBtn">🔗 Generate Download Links</button>
+            <button onclick="clearLog()" id="clearBtn">🗑️ Clear Log</button>
+        </div>
+
+        <div class="progress" id="progressContainer" style="display: none;">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill">0%</div>
+            </div>
+            <div class="progress-text" id="progressText">Ready to start...</div>
+        </div>
+
+        <div id="statusContainer"></div>
+        <div class="log" id="logContainer"></div>
+        <div class="image-grid" id="imageGrid"></div>
+    </div>
+
+    <script>
+        const images = [
+            // Starters
+            { name: 'scallops.jpg', query: 'scallops fine dining', description: 'Pan-seared scallops' },
+            { name: 'foie-gras.jpg', query: 'foie gras terrine', description: 'Foie gras terrine' },
+            { name: 'burrata.jpg', query: 'burrata tomatoes', description: 'Burrata with tomatoes' },
+            { name: 'tuna-tartare.jpg', query: 'tuna tartare', description: 'Tuna tartare' },
+            { name: 'mushroom-risotto.jpg', query: 'mushroom risotto', description: 'Wild mushroom risotto' },
+            { name: 'oysters.jpg', query: 'oysters rockefeller', description: 'Oysters Rockefeller' },
+
+            // Mains
+            { name: 'wagyu.jpg', query: 'wagyu beef steak', description: 'Wagyu beef tenderloin' },
+            { name: 'sea-bass.jpg', query: 'sea bass fine dining', description: 'Pan-roasted sea bass' },
+            { name: 'duck.jpg', query: 'duck breast orange', description: 'Duck breast à l\'orange' },
+            { name: 'lobster.jpg', query: 'lobster thermidor', description: 'Lobster thermidor' },
+            { name: 'lamb.jpg', query: 'rack of lamb', description: 'Rack of lamb' },
+            { name: 'wellington.jpg', query: 'vegetable wellington', description: 'Vegetable wellington' },
+
+            // Desserts
+            { name: 'souffle.jpg', query: 'chocolate souffle', description: 'Chocolate soufflé' },
+            { name: 'creme-brulee.jpg', query: 'creme brulee', description: 'Crème brûlée' },
+            { name: 'tarte-tatin.jpg', query: 'tarte tatin', description: 'Tarte tatin' },
+            { name: 'tiramisu.jpg', query: 'tiramisu dessert', description: 'Tiramisu' },
+            { name: 'lemon-tart.jpg', query: 'lemon tart', description: 'Lemon tart' },
+            { name: 'cheese.jpg', query: 'cheese board artisan', description: 'Artisan cheese board' },
+
+            // Drinks
+            { name: 'wine-red.jpg', query: 'red wine bottle', description: 'Red wine' },
+            { name: 'champagne.jpg', query: 'champagne bottle', description: 'Champagne' },
+            { name: 'wine-white.jpg', query: 'white wine bottle', description: 'White wine' },
+            { name: 'cocktail.jpg', query: 'signature cocktail', description: 'Signature cocktail' },
+            { name: 'beer.jpg', query: 'craft beer', description: 'Craft beer' },
+            { name: 'coffee.jpg', query: 'artisan coffee', description: 'Artisan coffee' },
+
+            // Events
+            { name: 'wine-tasting.jpg', query: 'wine tasting event', description: 'Wine tasting event' },
+            { name: 'chef-special.jpg', query: 'chef plating gourmet', description: 'Chef\'s special' },
+            { name: 'private-dining.jpg', query: 'private dining room luxury', description: 'Private dining room' },
+
+            // Gallery
+            { name: 'gallery-1.jpg', query: 'wagyu steak plating', description: 'Signature wagyu dish' },
+            { name: 'gallery-2.jpg', query: 'fine dining restaurant interior', description: 'Main dining area' },
+            { name: 'gallery-3.jpg', query: 'gourmet dessert plating', description: 'Artisan dessert' },
+            { name: 'gallery-4.jpg', query: 'luxury private dining room', description: 'Private dining room' },
+            { name: 'gallery-5.jpg', query: 'chef cooking kitchen', description: 'Chef at work' },
+            { name: 'gallery-6.jpg', query: 'fresh seafood display', description: 'Fresh seafood' },
+            { name: 'gallery-7.jpg', query: 'restaurant bar lounge', description: 'Bar and lounge' },
+            { name: 'gallery-8.jpg', query: 'wine cellar luxury', description: 'Wine cellar' },
+            { name: 'gallery-9.jpg', query: 'fine dining food close up', description: 'Plating perfection' },
+            { name: 'gallery-10.jpg', query: 'fresh ingredients vegetables', description: 'Fresh ingredients' },
+            { name: 'gallery-11.jpg', query: 'elegant table setting', description: 'Elegant table setting' },
+            { name: 'gallery-12.jpg', query: 'gourmet dish presentation', description: 'Gourmet presentation' }
+        ];
+
+        let currentIndex = 0;
+
+        function log(message, type = 'info') {
+            const logContainer = document.getElementById('logContainer');
+            const entry = document.createElement('div');
+            entry.className = 'log-entry';
+            const timestamp = new Date().toLocaleTimeString();
+            entry.textContent = `[${timestamp}] ${message}`;
+            logContainer.appendChild(entry);
+            logContainer.scrollTop = logContainer.scrollHeight;
+        }
+
+        function showStatus(message, type = 'info') {
+            const statusContainer = document.getElementById('statusContainer');
+            statusContainer.innerHTML = `<div class="status ${type}">${message}</div>`;
+        }
+
+        function updateProgress(current, total) {
+            const percent = Math.round((current / total) * 100);
+            document.getElementById('progressFill').style.width = percent + '%';
+            document.getElementById('progressFill').textContent = percent + '%';
+            document.getElementById('progressText').textContent = `Downloaded ${current} of ${total} images`;
+        }
+
+        function clearLog() {
+            document.getElementById('logContainer').innerHTML = '';
+            document.getElementById('imageGrid').innerHTML = '';
+            document.getElementById('statusContainer').innerHTML = '';
+            document.getElementById('progressContainer').style.display = 'none';
+        }
+
+        async function downloadImage(imageInfo, index) {
+            try {
+                // Using Unsplash Source API for random high-quality images
+                const url = `https://source.unsplash.com/800x600/?${encodeURIComponent(imageInfo.query)}`;
+
+                log(`Downloading: ${imageInfo.name} (${imageInfo.description})`);
+
+                // Create image element to display
+                const imgContainer = document.createElement('div');
+                imgContainer.className = 'image-item';
+
+                const img = document.createElement('img');
+                img.src = url;
+                img.alt = imageInfo.description;
+                img.crossOrigin = 'anonymous';
+
+                const label = document.createElement('div');
+                label.className = 'label';
+                label.textContent = imageInfo.name;
+
+                imgContainer.appendChild(img);
+                imgContainer.appendChild(label);
+                document.getElementById('imageGrid').appendChild(imgContainer);
+
+                // Wait for image to load
+                await new Promise((resolve, reject) => {
+                    img.onload = resolve;
+                    img.onerror = reject;
+                });
+
+                // Create download link
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = imageInfo.name;
+                a.target = '_blank';
+                a.click();
+
+                log(`✓ Downloaded: ${imageInfo.name}`, 'success');
+                return true;
+            } catch (error) {
+                log(`✗ Failed: ${imageInfo.name} - ${error.message}`, 'error');
+                return false;
+            }
+        }
+
+        async function downloadAllImages() {
+            const btn = document.getElementById('downloadBtn');
+            btn.disabled = true;
+            document.getElementById('progressContainer').style.display = 'block';
+
+            showStatus('🚀 Starting download process...', 'info');
+            log('Starting batch download of all images...');
+
+            let successCount = 0;
+
+            for (let i = 0; i < images.length; i++) {
+                updateProgress(i, images.length);
+                const success = await downloadImage(images[i], i);
+                if (success) successCount++;
+
+                // Wait 1 second between downloads to avoid rate limiting
+                if (i < images.length - 1) {
+                    await new Promise(resolve => setTimeout(resolve, 1000));
+                }
+            }
+
+            updateProgress(images.length, images.length);
+
+            if (successCount === images.length) {
+                showStatus(`✅ Success! All ${images.length} images downloaded. Save them to your images/ folder.`, 'success');
+                log(`✓ Complete! Successfully downloaded all ${images.length} images.`);
+            } else {
+                showStatus(`⚠️ Downloaded ${successCount} of ${images.length} images. Check log for details.`, 'error');
+                log(`⚠ Completed with ${images.length - successCount} errors.`);
+            }
+
+            btn.disabled = false;
+        }
+
+        function generateLinks() {
+            clearLog();
+            showStatus('📋 Generated download links below. Click to open in new tab.', 'info');
+            log('=== DIRECT DOWNLOAD LINKS ===');
+
+            images.forEach((img, index) => {
+                const url = `https://source.unsplash.com/800x600/?${encodeURIComponent(img.query)}`;
+                log(`${index + 1}. ${img.name}: ${url}`);
+
+                // Create clickable preview
+                const imgContainer = document.createElement('div');
+                imgContainer.className = 'image-item';
+                imgContainer.style.cursor = 'pointer';
+                imgContainer.onclick = () => window.open(url, '_blank');
+
+                const imgEl = document.createElement('img');
+                imgEl.src = url;
+                imgEl.alt = img.description;
+
+                const label = document.createElement('div');
+                label.className = 'label';
+                label.innerHTML = `<strong>${img.name}</strong><br><small>Click to open</small>`;
+
+                imgContainer.appendChild(imgEl);
+                imgContainer.appendChild(label);
+                document.getElementById('imageGrid').appendChild(imgContainer);
+            });
+
+            log('=== Click any image above to download ===');
+        }
+
+        // Initial log
+        log('Ready to download images. Click "Download All Images" to begin.');
+    </script>
+</body>
+
+</html>
