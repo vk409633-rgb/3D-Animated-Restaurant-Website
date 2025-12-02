@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Background Animation - Visual Guide</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+            color: #ffffff;
+            padding: 40px 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 3em;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #D4AF37, #FFD700);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            text-align: center;
+            font-size: 1.2em;
+            color: #aaa;
+            margin-bottom: 50px;
+        }
+
+        .section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(212, 175, 55, 0.2);
+        }
+
+        .section h2 {
+            color: #D4AF37;
+            margin-bottom: 20px;
+            font-size: 2em;
+        }
+
+        .layer-diagram {
+            display: flex;
+            gap: 20px;
+            margin: 30px 0;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .layer {
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.1), rgba(255, 215, 0, 0.1));
+            border: 2px solid #D4AF37;
+            border-radius: 15px;
+            padding: 20px;
+            min-width: 200px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .layer:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.3);
+        }
+
+        .layer-number {
+            font-size: 3em;
+            font-weight: bold;
+            color: #FFD700;
+            margin-bottom: 10px;
+        }
+
+        .layer-info {
+            font-size: 0.9em;
+            color: #ccc;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .feature-card {
+            background: rgba(212, 175, 55, 0.1);
+            border-radius: 15px;
+            padding: 25px;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            background: rgba(212, 175, 55, 0.2);
+            transform: scale(1.05);
+        }
+
+        .feature-icon {
+            font-size: 3em;
+            margin-bottom: 15px;
+        }
+
+        .feature-title {
+            color: #FFD700;
+            font-size: 1.3em;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .feature-desc {
+            color: #bbb;
+            font-size: 0.95em;
+        }
+
+        .animation-demo {
+            background: rgba(10, 10, 10, 0.8);
+            border-radius: 15px;
+            padding: 40px;
+            margin: 30px 0;
+            text-align: center;
+            border: 2px solid #D4AF37;
+        }
+
+        .demo-title {
+            font-size: 1.5em;
+            color: #FFD700;
+            margin-bottom: 20px;
+        }
+
+        .scroll-indicator {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 30px;
+            margin: 20px 0;
+        }
+
+        .scroll-stage {
+            text-align: center;
+        }
+
+        .scroll-percent {
+            font-size: 2em;
+            color: #D4AF37;
+            font-weight: bold;
+        }
+
+        .scroll-effect {
+            color: #aaa;
+            font-size: 0.9em;
+            margin-top: 10px;
+        }
+
+        .arrow {
+            font-size: 2em;
+            color: #D4AF37;
+        }
+
+        .code-block {
+            background: #1a1a1a;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            border-left: 4px solid #D4AF37;
+            overflow-x: auto;
+        }
+
+        .code-block code {
+            color: #FFD700;
+            font-family: 'Courier New', monospace;
+        }
+
+        .highlight {
+            color: #D4AF37;
+            font-weight: bold;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #D4AF37, #FFD700);
+            color: #000;
+            padding: 15px 40px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.1em;
+            margin: 20px 10px;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 20px rgba(212, 175, 55, 0.4);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(212, 175, 55, 0.6);
+        }
+
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 3em;
+            color: #FFD700;
+            font-weight: bold;
+        }
+
+        .stat-label {
+            color: #aaa;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>🎨 3D Background Scroll Animation</h1>
+        <p class="subtitle">Visual Guide to Your Immersive Restaurant Experience</p>
+
+        <!-- Overview Section -->
+        <div class="section">
+            <h2>✨ What You Get</h2>
+            <p>A stunning, cinematic 3D background that uses your custom image with advanced parallax effects, floating
+                geometric shapes, and atmospheric particles. Everything responds beautifully to scroll and mouse
+                movement!</p>
+
+            <div class="stats">
+                <div class="stat">
+                    <div class="stat-number">5</div>
+                    <div class="stat-label">Parallax Layers</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">8</div>
+                    <div class="stat-label">3D Shapes</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">6K</div>
+                    <div class="stat-label">Particles</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">4</div>
+                    <div class="stat-label">Dynamic Lights</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Layer Structure -->
+        <div class="section">
+            <h2>📐 Layer Structure</h2>
+            <p>Your image is displayed across 5 depth layers, each moving at different speeds to create a convincing 3D
+                parallax effect:</p>
+
+            <div class="layer-diagram">
+                <div class="layer">
+                    <div class="layer-number">1</div>
+                    <div class="layer-info">
+                        <strong>Closest Layer</strong><br>
+                        Z: -5 units<br>
+                        Speed: 0.5x<br>
+                        Opacity: 15%
+                    </div>
+                </div>
+                <div class="layer">
+                    <div class="layer-number">2</div>
+                    <div class="layer-info">
+                        <strong>Near Layer</strong><br>
+                        Z: -8 units<br>
+                        Speed: 0.8x<br>
+                        Opacity: 13%
+                    </div>
+                </div>
+                <div class="layer">
+                    <div class="layer-number">3</div>
+                    <div class="layer-info">
+                        <strong>Middle Layer</strong><br>
+                        Z: -11 units<br>
+                        Speed: 1.1x<br>
+                        Opacity: 11%
+                    </div>
+                </div>
+                <div class="layer">
+                    <div class="layer-number">4</div>
+                    <div class="layer-info">
+                        <strong>Far Layer</strong><br>
+                        Z: -14 units<br>
+                        Speed: 1.4x<br>
+                        Opacity: 9%
+                    </div>
+                </div>
+                <div class="layer">
+                    <div class="layer-number">5</div>
+                    <div class="layer-info">
+                        <strong>Farthest Layer</strong><br>
+                        Z: -17 units<br>
+                        Speed: 1.7x<br>
+                        Opacity: 7%
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Features -->
+        <div class="section">
+            <h2>🎯 Key Features</h2>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🖼️</div>
+                    <div class="feature-title">Your Image</div>
+                    <div class="feature-desc">Custom background texture across multiple parallax layers</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔷</div>
+                    <div class="feature-title">3D Shapes</div>
+                    <div class="feature-desc">8 golden geometric objects with metallic glow</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">✨</div>
+                    <div class="feature-title">Particles</div>
+                    <div class="feature-desc">6,000 glowing particles in 3 layers</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">💡</div>
+                    <div class="feature-title">Dynamic Lights</div>
+                    <div class="feature-desc">Orbiting accent lights with pulsing intensity</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📜</div>
+                    <div class="feature-title">Scroll Effects</div>
+                    <div class="feature-desc">Everything responds to page scroll position</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🖱️</div>
+                    <div class="feature-title">Mouse Reactive</div>
+                    <div class="feature-desc">Camera and layers follow cursor movement</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Scroll Animation Timeline -->
+        <div class="section">
+            <h2>📜 Scroll Animation Timeline</h2>
+            <div class="animation-demo">
+                <div class="demo-title">What Happens As You Scroll</div>
+                <div class="scroll-indicator">
+                    <div class="scroll-stage">
+                        <div class="scroll-percent">0%</div>
+                        <div class="scroll-effect">Initial State<br>Layers aligned</div>
+                    </div>
+                    <div class="arrow">→</div>
+                    <div class="scroll-stage">
+                        <div class="scroll-percent">25%</div>
+                        <div class="scroll-effect">Layers separate<br>Parallax begins</div>
+                    </div>
+                    <div class="arrow">→</div>
+                    <div class="scroll-stage">
+                        <div class="scroll-percent">50%</div>
+                        <div class="scroll-effect">Shapes approach<br>Camera zooms</div>
+                    </div>
+                    <div class="arrow">→</div>
+                    <div class="scroll-stage">
+                        <div class="scroll-percent">100%</div>
+                        <div class="scroll-effect">Maximum zoom<br>Elements close</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Technical Details -->
+        <div class="section">
+            <h2>⚙️ Technical Implementation</h2>
+
+            <h3 style="color: #FFD700; margin: 20px 0;">Parallax Calculation</h3>
+            <div class="code-block">
+                <code>
+layer.position.y = scrollProgress * 10 * layer.userData.speed;<br>
+// Closer layers (speed 0.5) move slower<br>
+// Farther layers (speed 1.7) move faster<br>
+// Creates depth perception
+                </code>
+            </div>
+
+            <h3 style="color: #FFD700; margin: 20px 0;">Shape Animation</h3>
+            <div class="code-block">
+                <code>
+// Floating motion<br>
+shape.position.y = originalY + Math.sin(time) * 0.5;<br><br>
+// Scroll-driven depth<br>
+shape.position.z = originalZ + scrollProgress * 20;<br><br>
+// Mouse interaction<br>
+shape.position.x += mouseX * (index + 1) * 0.5;
+                </code>
+            </div>
+
+            <h3 style="color: #FFD700; margin: 20px 0;">Camera Movement</h3>
+            <div class="code-block">
+                <code>
+// Follow mouse<br>
+camera.position.x += (mouseX * 3 - camera.position.x) * 0.03;<br><br>
+// Zoom on scroll<br>
+camera.position.z = 15 - scrollProgress * 10;
+                </code>
+            </div>
+        </div>
+
+        <!-- Performance -->
+        <div class="section">
+            <h2>⚡ Performance Optimizations</h2>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-title">Pixel Ratio Capping</div>
+                    <div class="feature-desc">Max 2x device pixel ratio for smooth performance</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-title">Efficient Particles</div>
+                    <div class="feature-desc">Optimized particle count and update logic</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-title">Resource Cleanup</div>
+                    <div class="feature-desc">Proper disposal of geometries and materials</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-title">Shadow Optimization</div>
+                    <div class="feature-desc">Balanced shadow quality for performance</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CTA -->
+        <div class="section" style="text-align: center;">
+            <h2>🚀 Ready to Experience It?</h2>
+            <p style="margin: 20px 0; font-size: 1.1em;">Your 3D background scroll animation is ready to go!</p>
+            <a href="index.html" class="cta-button">🍽️ Open Restaurant Website</a>
+            <a href="3D_BACKGROUND_ANIMATION.md" class="cta-button">📖 Read Full Documentation</a>
+        </div>
+
+        <!-- Footer -->
+        <div
+            style="text-align: center; margin-top: 50px; padding-top: 30px; border-top: 1px solid rgba(212, 175, 55, 0.3); color: #666;">
+            <p>Created for Lumière Restaurant • December 2, 2025</p>
+            <p style="margin-top: 10px;">Powered by Three.js • Optimized for Web Performance</p>
+        </div>
+    </div>
+</body>
+
+</html>
