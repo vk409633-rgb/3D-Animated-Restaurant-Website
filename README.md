@@ -1,14 +1,34 @@
-# Lumière - 3D Animated Restaurant Website
+# Lumière - Advanced 3D Animated Restaurant Website
 
-A stunning, immersive restaurant website featuring cutting-edge 3D animations, smooth transitions, and premium design aesthetics.
+A **highly immersive, cinematic 3D restaurant website** featuring real-time WebGL rendering, PBR materials, sophisticated scroll-driven animations, and professional-grade lighting.
 
-## 🌟 Features
+## 🎬 Advanced Features
+
+### Cinematic 3D Rendering
+- **PBR Materials**: Physically-based rendering with metalness, roughness, and emissive properties
+- **Real-Time Shadows**: 2048x2048 soft shadow mapping
+- **Tone Mapping**: ACES Filmic color grading for cinematic look
+- **Fog System**: Depth-based atmospheric effects
+- **Multi-Layer Particles**: 3,500 particles across 3 depth layers
+
+### Scroll-Driven Interactions
+- **Hero Explosion Effect**: Ingredients fly outward at 30% scroll
+- **Camera Rails**: Smooth z-axis pull-back on scroll
+- **Ingredient Breakdown**: Scroll-triggered explosion at 70%
+- **Intersection Observer**: Viewport-based animation triggers
+- **Organic Motion**: Sine wave floating with individual speeds
 
 ### Interactive 3D Elements
-- **3D Hero Section**: Rotating plate with floating food elements and particle effects
-- **3D About Section**: Floating ingredient models with parallax effects
-- **Virtual Restaurant Tour**: Interactive 3D walkthrough with multiple viewpoints
-- **3D Animated Map**: Bouncing location marker with floating landmarks
+1. **3D Hero Section**: Rotating dish with 8 unique food elements and layered particles
+2. **3D About Section**: Detailed ingredient models with explosion animations
+3. **Virtual Restaurant Tour**: 4 camera positions with smooth 2-second transitions
+4. **3D Animated Map**: Orbiting camera with pulsing location marker
+
+### Cinematic Lighting
+- **3-Point Lighting**: Key, fill, and rim lights
+- **Spotlights**: Focused beams on dining tables
+- **Dynamic Intensity**: Pulsing and breathing effects
+- **Accent Lights**: Moving colored lights for atmosphere
 
 ### Sections
 1. **Landing Page / Hero** - Immersive 3D showcase with rotating elements
