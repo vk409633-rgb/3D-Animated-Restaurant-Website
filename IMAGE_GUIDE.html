@@ -1,0 +1,121 @@
+<!-- Image Placeholder Guide -->
+<!-- 
+This file lists all the images needed for the website.
+You can use placeholder services like:
+- https://placehold.co/
+- https://via.placeholder.com/
+- https://picsum.photos/
+- Or use AI image generators like DALL-E, Midjourney, or Stable Diffusion
+
+Recommended Image Sizes:
+- Menu items: 800x600px
+- Events: 800x600px  
+- Gallery: 1200x900px
+- All images should be in JPG or WebP format
+
+Image List:
+============
+
+MENU ITEMS (Starters):
+1. images/scallops.jpg - Pan-seared scallops with cauliflower purée
+2. images/foie-gras.jpg - Foie gras terrine with fig compote
+3. images/burrata.jpg - Burrata with heirloom tomatoes
+4. images/tuna-tartare.jpg - Yellowfin tuna tartare
+5. images/mushroom-risotto.jpg - Wild mushroom risotto
+6. images/oysters.jpg - Oysters Rockefeller
+
+MENU ITEMS (Mains):
+7. images/wagyu.jpg - Wagyu beef tenderloin
+8. images/sea-bass.jpg - Pan-roasted sea bass
+9. images/duck.jpg - Duck breast à l'orange
+10. images/lobster.jpg - Lobster thermidor
+11. images/lamb.jpg - Rack of lamb
+12. images/wellington.jpg - Vegetable wellington
+
+MENU ITEMS (Desserts):
+13. images/souffle.jpg - Chocolate soufflé
+14. images/creme-brulee.jpg - Crème brûlée
+15. images/tarte-tatin.jpg - Tarte tatin
+16. images/tiramisu.jpg - Tiramisu
+17. images/lemon-tart.jpg - Lemon tart
+18. images/cheese.jpg - Artisan cheese board
+
+MENU ITEMS (Drinks):
+19. images/wine-red.jpg - Red wine bottle
+20. images/champagne.jpg - Champagne bottle
+21. images/wine-white.jpg - White wine bottle
+22. images/cocktail.jpg - Signature cocktail
+23. images/beer.jpg - Craft beer selection
+24. images/coffee.jpg - Artisan coffee
+
+EVENTS:
+25. images/wine-tasting.jpg - Wine tasting event setup
+26. images/chef-special.jpg - Chef's special seasonal dish
+27. images/private-dining.jpg - Private dining room interior
+
+GALLERY:
+28. images/gallery-1.jpg - Signature wagyu dish plating
+29. images/gallery-2.jpg - Main dining area interior
+30. images/gallery-3.jpg - Artisan dessert presentation
+31. images/gallery-4.jpg - Private dining room
+32. images/gallery-5.jpg - Chef working in kitchen
+33. images/gallery-6.jpg - Fresh seafood selection
+34. images/gallery-7.jpg - Bar and lounge area
+35. images/gallery-8.jpg - Wine cellar
+36. images/gallery-9.jpg - Plating perfection close-up
+37. images/gallery-10.jpg - Seasonal fresh ingredients
+38. images/gallery-11.jpg - Elegant table setting
+39. images/gallery-12.jpg - Gourmet dish presentation
+
+TEMPORARY PLACEHOLDER SOLUTION:
+================================
+Until you have real images, you can use this JavaScript snippet to create
+colored placeholder divs. Add this to the bottom of index.html before </body>:
+
+<script>
+// Temporary placeholder for missing images
+document.addEventListener('DOMContentLoaded', function() {
+    const images = document.querySelectorAll('img');
+    images.forEach(img => {
+        img.addEventListener('error', function() {
+            const placeholder = document.createElement('div');
+            placeholder.style.cssText = `
+                width: 100%;
+                height: 100%;
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                color: white;
+                font-weight: bold;
+                text-align: center;
+                padding: 20px;
+            `;
+            placeholder.textContent = this.alt || 'Image';
+            this.parentNode.replaceChild(placeholder, this);
+        });
+    });
+});
+</script>
+
+RECOMMENDED IMAGE SOURCES:
+==========================
+1. Unsplash.com - Free high-quality photos
+2. Pexels.com - Free stock photos
+3. Pixabay.com - Free images
+4. AI Generators - DALL-E, Midjourney, Stable Diffusion
+5. Professional photographer - For authentic restaurant photos
+
+SEARCH TERMS FOR STOCK PHOTOS:
+==============================
+- "fine dining food photography"
+- "gourmet restaurant plating"
+- "luxury restaurant interior"
+- "michelin star dishes"
+- "elegant food presentation"
+- "upscale dining ambiance"
+- "chef plating food"
+- "wine cellar luxury"
+- "modern restaurant design"
+
+-->

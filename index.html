@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Experience fine dining like never before. Immersive 3D restaurant experience with exquisite cuisine and unforgettable ambiance.">
+    <meta name="keywords" content="fine dining, restaurant, 3D experience, gourmet food, reservations">
+    <title>Lumière - Fine Dining. Immersive Experience.</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="css/style.css">
+
+    <!-- Three.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <h1>Lumière</h1>
+            </div>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="#home" class="nav-link">Home</a></li>
+                <li><a href="#about" class="nav-link">About</a></li>
+                <li><a href="#menu" class="nav-link">Menu</a></li>
+                <li><a href="#tour" class="nav-link">Virtual Tour</a></li>
+                <li><a href="#events" class="nav-link">Events</a></li>
+                <li><a href="#gallery" class="nav-link">Gallery</a></li>
+                <li><a href="#contact" class="nav-link">Contact</a></li>
+            </ul>
+            <div class="nav-cta">
+                <a href="#reservation" class="btn btn-primary">Reserve Table</a>
+            </div>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div id="hero-canvas"></div>
+        <div class="hero-content">
+            <h1 class="hero-title">Fine Dining.<br>Immersive Experience.</h1>
+            <p class="hero-subtitle">Where culinary artistry meets cutting-edge design</p>
+            <div class="hero-cta">
+                <a href="#reservation" class="btn btn-primary btn-large">Reserve a Table</a>
+                <a href="#menu" class="btn btn-secondary btn-large">View Menu</a>
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <div class="mouse">
+                <div class="wheel"></div>
+            </div>
+            <p>Scroll to explore</p>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+        <div class="container">
+            <div class="about-grid">
+                <div class="about-content">
+                    <span class="section-label">Our Story</span>
+                    <h2 class="section-title">A Legacy of<br>Culinary Excellence</h2>
+                    <p class="about-text">
+                        Since 1985, Lumière has been redefining the art of fine dining. Our journey began with a simple
+                        vision: to create an experience that transcends mere sustenance and becomes a celebration of
+                        life's finest moments.
+                    </p>
+                    <p class="about-text">
+                        Under the guidance of our Michelin-starred Chef Alexandre Beaumont, we source only the finest
+                        sustainable ingredients, working directly with local farmers and artisans who share our
+                        commitment to excellence.
+                    </p>
+                    <div class="about-highlights">
+                        <div class="highlight-item">
+                            <div class="highlight-icon">🌱</div>
+                            <h3>Sustainable Sourcing</h3>
+                            <p>100% organic, locally-sourced ingredients</p>
+                        </div>
+                        <div class="highlight-item">
+                            <div class="highlight-icon">⭐</div>
+                            <h3>Michelin Excellence</h3>
+                            <p>3 Michelin stars since 2010</p>
+                        </div>
+                        <div class="highlight-item">
+                            <div class="highlight-icon">👨‍🍳</div>
+                            <h3>Master Chef</h3>
+                            <p>Led by Chef Alexandre Beaumont</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="about-visual">
+                    <div id="about-canvas"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Menu Section -->
+    <section id="menu" class="menu">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-label">Culinary Artistry</span>
+                <h2 class="section-title">Our Menu</h2>
+                <p class="section-subtitle">Each dish is a masterpiece, crafted with passion and precision</p>
+            </div>
+
+            <div class="menu-tabs">
+                <button class="menu-tab active" data-category="starters">Starters</button>
+                <button class="menu-tab" data-category="mains">Mains</button>
+                <button class="menu-tab" data-category="desserts">Desserts</button>
+                <button class="menu-tab" data-category="drinks">Drinks</button>
+            </div>
+
+            <div class="menu-grid" id="menuGrid">
+                <!-- Menu items will be dynamically loaded -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Virtual Tour Section -->
+    <section id="tour" class="virtual-tour">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-label">Explore</span>
+                <h2 class="section-title">Virtual Restaurant Tour</h2>
+                <p class="section-subtitle">Step inside and experience our stunning ambiance</p>
+            </div>
+
+            <div class="tour-container">
+                <div id="tour-canvas"></div>
+                <div class="tour-controls">
+                    <button class="tour-btn" data-view="dining">Dining Area</button>
+                    <button class="tour-btn" data-view="bar">Bar Lounge</button>
+                    <button class="tour-btn" data-view="private">Private Room</button>
+                    <button class="tour-btn" data-view="kitchen">Chef's Kitchen</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Reservation Section -->
+    <section id="reservation" class="reservation">
+        <div class="container">
+            <div class="reservation-content">
+                <div class="reservation-info">
+                    <span class="section-label">Book Your Experience</span>
+                    <h2 class="section-title">Reserve a Table</h2>
+                    <p class="reservation-text">
+                        Join us for an unforgettable dining experience. Our intimate setting accommodates only 40 guests
+                        per evening, ensuring personalized attention and exceptional service.
+                    </p>
+                    <div class="reservation-features">
+                        <div class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <span>Personalized service</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <span>Custom menu options</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <span>Wine pairing available</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="reservation-form-container">
+                    <form id="reservationForm" class="reservation-form">
+                        <div class="form-group">
+                            <label for="name">Full Name</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input type="email" id="email" name="email" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="phone">Phone</label>
+                                <input type="tel" id="phone" name="phone" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="date">Date</label>
+                                <input type="date" id="date" name="date" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="time">Time</label>
+                                <input type="time" id="time" name="time" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="guests">Number of Guests</label>
+                            <select id="guests" name="guests" required>
+                                <option value="">Select...</option>
+                                <option value="1">1 Guest</option>
+                                <option value="2">2 Guests</option>
+                                <option value="3">3 Guests</option>
+                                <option value="4">4 Guests</option>
+                                <option value="5">5 Guests</option>
+                                <option value="6">6+ Guests</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="special">Special Requests (Optional)</label>
+                            <textarea id="special" name="special" rows="3"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-large btn-full">Confirm Reservation</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Events Section -->
+    <section id="events" class="events">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-label">Special Occasions</span>
+                <h2 class="section-title">Events & Offers</h2>
+                <p class="section-subtitle">Exclusive experiences throughout the year</p>
+            </div>
+
+            <div class="events-grid">
+                <div class="event-card">
+                    <div class="event-image">
+                        <img src="images/wine-tasting.jpg" alt="Wine Tasting Event">
+                        <div class="event-badge">Upcoming</div>
+                    </div>
+                    <div class="event-content">
+                        <h3>Wine Tasting Evening</h3>
+                        <p class="event-date">December 15, 2025 • 7:00 PM</p>
+                        <p class="event-description">
+                            Join our sommelier for an exclusive tasting of rare French wines paired with artisanal
+                            cheeses.
+                        </p>
+                        <a href="#reservation" class="btn btn-secondary">Book Now</a>
+                    </div>
+                </div>
+
+                <div class="event-card">
+                    <div class="event-image">
+                        <img src="images/chef-special.jpg" alt="Chef's Special">
+                        <div class="event-badge seasonal">Seasonal</div>
+                    </div>
+                    <div class="event-content">
+                        <h3>Winter Tasting Menu</h3>
+                        <p class="event-date">Available Now</p>
+                        <p class="event-description">
+                            Experience our exclusive 7-course winter menu featuring seasonal truffles and wild game.
+                        </p>
+                        <a href="#menu" class="btn btn-secondary">View Menu</a>
+                    </div>
+                </div>
+
+                <div class="event-card">
+                    <div class="event-image">
+                        <img src="images/private-dining.jpg" alt="Private Dining">
+                    </div>
+                    <div class="event-content">
+                        <h3>Private Dining Experience</h3>
+                        <p class="event-date">By Appointment</p>
+                        <p class="event-description">
+                            Host your special celebration in our exclusive private dining room for up to 12 guests.
+                        </p>
+                        <a href="#contact" class="btn btn-secondary">Inquire</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section id="gallery" class="gallery">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-label">Visual Journey</span>
+                <h2 class="section-title">Gallery</h2>
+                <p class="section-subtitle">A glimpse into our world of culinary artistry</p>
+            </div>
+
+            <div class="gallery-grid" id="galleryGrid">
+                <!-- Gallery items will be dynamically loaded -->
+            </div>
+        </div>
+
+        <!-- Lightbox -->
+        <div id="lightbox" class="lightbox">
+            <button class="lightbox-close">&times;</button>
+            <button class="lightbox-prev">‹</button>
+            <button class="lightbox-next">›</button>
+            <img src="" alt="" id="lightboxImage">
+        </div>
+    </section>
+
+    <!-- Reviews Section -->
+    <section id="reviews" class="reviews">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-label">Testimonials</span>
+                <h2 class="section-title">What Our Guests Say</h2>
+            </div>
+
+            <div class="reviews-grid">
+                <div class="review-card">
+                    <div class="review-stars">★★★★★</div>
+                    <p class="review-text">
+                        "An absolutely transcendent dining experience. Every dish was a work of art, and the service was
+                        impeccable. The 3D virtual tour convinced us to visit, and we weren't disappointed!"
+                    </p>
+                    <div class="review-author">
+                        <div class="author-info">
+                            <h4>Sarah Mitchell</h4>
+                            <p>Google Reviews</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="review-card">
+                    <div class="review-stars">★★★★★</div>
+                    <p class="review-text">
+                        "Lumière sets the gold standard for fine dining. Chef Alexandre's creativity knows no bounds,
+                        and the wine pairings were perfection. A must-visit for any food enthusiast."
+                    </p>
+                    <div class="review-author">
+                        <div class="author-info">
+                            <h4>James Chen</h4>
+                            <p>TripAdvisor</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="review-card">
+                    <div class="review-stars">★★★★★</div>
+                    <p class="review-text">
+                        "We celebrated our anniversary here, and it was magical. The ambiance, the food, the attention
+                        to detail – everything was perfect. We'll definitely be returning!"
+                    </p>
+                    <div class="review-author">
+                        <div class="author-info">
+                            <h4>Emily & David Rodriguez</h4>
+                            <p>Google Reviews</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <div class="contact-grid">
+                <div class="contact-info">
+                    <span class="section-label">Get in Touch</span>
+                    <h2 class="section-title">Visit Us</h2>
+
+                    <div class="contact-details">
+                        <div class="contact-item">
+                            <h3>Address</h3>
+                            <p>123 Gourmet Boulevard<br>Culinary District<br>New York, NY 10001</p>
+                        </div>
+
+                        <div class="contact-item">
+                            <h3>Email</h3>
+                            <p>vk409633@gmail.com</p>
+                        </div>
+
+                        <div class="contact-item">
+                            <h3>Opening Hours</h3>
+                            <p>
+                                Tuesday - Thursday: 6:00 PM - 10:00 PM<br>
+                                Friday - Saturday: 6:00 PM - 11:00 PM<br>
+                                Sunday - Monday: Closed
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="contact-map">
+                    <div id="map-canvas"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3 class="footer-logo">Lumière</h3>
+                    <p>Fine dining redefined through culinary artistry and immersive experiences.</p>
+                    <div class="social-links">
+                        <a href="#" aria-label="Instagram"><svg width="24" height="24" viewBox="0 0 24 24"
+                                fill="currentColor">
+                                <path
+                                    d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+                            </svg></a>
+                        <a href="#" aria-label="Facebook"><svg width="24" height="24" viewBox="0 0 24 24"
+                                fill="currentColor">
+                                <path
+                                    d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z" />
+                            </svg></a>
+                        <a href="#" aria-label="Twitter"><svg width="24" height="24" viewBox="0 0 24 24"
+                                fill="currentColor">
+                                <path
+                                    d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z" />
+                            </svg></a>
+                    </div>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#about">About Us</a></li>
+                        <li><a href="#menu">Menu</a></li>
+                        <li><a href="#reservation">Reservations</a></li>
+                        <li><a href="#events">Events</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Information</h4>
+                    <ul>
+                        <li><a href="#gallery">Gallery</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Newsletter</h4>
+                    <p>Subscribe for exclusive offers and updates</p>
+                    <form class="newsletter-form">
+                        <input type="email" placeholder="Your email" required>
+                        <button type="submit" class="btn btn-primary">Subscribe</button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2025 Lumière Restaurant. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/placeholder-generator.js"></script>
+    <script src="js/menu-data.js"></script>
+    <script src="js/gallery-data.js"></script>
+    <script src="js/3d-hero.js"></script>
+    <script src="js/3d-about.js"></script>
+    <script src="js/3d-tour.js"></script>
+    <script src="js/3d-map.js"></script>
+    <script src="js/menu.js"></script>
+    <script src="js/gallery.js"></script>
+    <script src="js/main.js"></script>
+</body>
+
+</html>
